@@ -57,13 +57,13 @@ export const ApplicationForm = ({ onBack }) => {
     { id: 4, name: 'Readiness levels', icon: Gauge, shortName: 'Technology Readiness & Current Stage' },
     { id: 5, name: 'Market & traction', icon: TrendingUp, shortName: 'Market, Traction & Customer Details' },
     { id: 6, name: 'Financials', icon: DollarSign, shortName: 'Financial Performance' },
-    { id: 7, name: 'Funding history', icon: History, shortName: 'Prior Grants & Investment History' },
-    { id: 8, name: 'Incubation history', icon: Workflow, shortName: 'Incubation & Acceleration Status' },
-    { id: 9, name: 'Project & budget', icon: Calculator, shortName: 'PITCH 2KONNECT Project Plan & Budget' },
-    { id: 10, name: 'Intellectual property', icon: ShieldCheck, shortName: 'Intellectual Property & IP Status' },
-    { id: 11, name: 'Documents', icon: FolderUp, shortName: 'Supporting Document Uploads' },
-    { id: 12, name: 'Discovery', icon: Compass, shortName: 'Programme Discovery & Referrals' },
-    { id: 13, name: 'Declaration', icon: CheckSquare, shortName: 'Applicant Declaration & Submission' },
+    { id: 7, name: 'Funding history', icon: History, shortName: 'Funding History & Capital Structure' },
+    { id: 8, name: 'Incubation history', icon: Workflow, shortName: 'Incubation History & Prior Grant / CSR Funding' },
+    { id: 9, name: 'Project & budget', icon: Calculator, shortName: 'Project Details & Funding Proposal' },
+    { id: 10, name: 'Intellectual property', icon: ShieldCheck, shortName: 'Intellectual Property' },
+    { id: 11, name: 'Documents', icon: FolderUp, shortName: 'Documents Checklist' },
+    { id: 12, name: 'Discovery', icon: Compass, shortName: 'Discovery & Additional Details' },
+    { id: 13, name: 'Declaration', icon: CheckSquare, shortName: 'Declaration & Signatures' },
   ];
 
   const initialFormState = {
@@ -154,51 +154,97 @@ export const ApplicationForm = ({ onBack }) => {
     cumulativeRevenue: '',
     currentFinancialNeeds: '',
 
-    // 7. Funding History
-    receivedPriorGrants: 'No',
-    priorGrantDetails: '',
-    raisedExternalEquity: 'No',
-    equityFundingDetails: '',
+    // 7. Funding History & Capital Structure
+    funding_equity_amount: '',
+    funding_equity_provider: '',
+    funding_equity_year: '',
+    funding_grants_amount: '',
+    funding_grants_provider: '',
+    funding_grants_year: '',
+    funding_debt_amount: '',
+    funding_debt_provider: '',
+    funding_debt_year: '',
+    funding_bootstrap_amount: '',
+    funding_bootstrap_provider: '',
+    funding_bootstrap_year: '',
+    funding_total_amount: '',
+    captable_name_0: '',
+    captable_percent_0: '',
+    captable_instrument_0: '',
+    captable_name_1: '',
+    captable_percent_1: '',
+    captable_instrument_1: '',
+    captable_name_2: '',
+    captable_percent_2: '',
+    captable_instrument_2: '',
+    captable_name_3: '',
+    captable_percent_3: '',
+    captable_instrument_3: '',
+    tbiKecInterest: 'No',
+    tbiKecPersonName: '',
+    tbiKecPersonRole: '',
+    tbiKecPersonShare: '',
+    tbiKecPersonInstrument: '',
+    incubatorEquityHold: 'No',
+    incubatorNameWithEquity: '',
+    incubatorEquityInstrumentDetails: '',
+    awardsAndRecognitions: '',
 
-    // 8. Incubation History
-    currentlyIncubated: 'No',
-    hostIncubatorName: '',
-    incubationDate: '',
-    readyForKonguTbiIncubation: 'Yes, both physical & virtual support',
+    // 8. Incubation History & Prior Grant / CSR Funding
+    isIncubationPart: 'No',
+    incubationProgrammeDetails: '',
+    receivedPriorGrantThroughIncubator: 'No',
+    priorIncubatorGrantDetails: '',
+    totalBootstrappedAmount: '',
+    totalExternalFundingAmount: '',
+    legalRegulatoryCompliance: '',
 
-    // 9. Project & Budget
-    grantAmountRequested: '₹20,00,000 (Maximum Approved Grant)',
-    projectDurationMonths: '12 Months',
-    milestone1Description: '',
-    milestone1Budget: '₹6,00,000 (30%)',
-    milestone2Description: '',
-    milestone2Budget: '₹8,00,000 (40%)',
-    milestone3Description: '',
-    milestone3Budget: '₹6,00,000 (30%)',
-    budgetBreakdownRawMaterials: '',
-    budgetBreakdownTestingCert: '',
-    budgetBreakdownFabrication: '',
+    // 9. Project Details & Funding Proposal
+    projectScopeObjectives: '',
+    projectActivitiesEnvisaged: '',
+    projectNeed: '',
+    projectCompetitiveAdvantage: '',
+    projectLevelOfImpact: '',
+    applicantCapabilityCapacity: '',
+    projectCollaborationDetails: '',
+    primarySector: 'Sustainable Agriculture and Rural Development',
+    subCategorySector: '',
+    projectDurationMonths: '',
+    selectedSdgs: [],
+    sdgJustification: '',
+    budgetTotalProject: '',
+    budgetApplicantContribution: '',
+    budgetCsrGrantRequested: '',
+    nonFinancialSupportExpected: '',
+    projectAdditionalInformation: '',
 
     // 10. Intellectual Property
-    ipStatus: 'Patent Applied / Pending',
+    ipStatus: [],
     patentApplicationNumbers: '',
-    regulatoryApprovalsRequired: '',
+    coreProprietaryInnovation: '',
 
-    // 11. Documents
-    pitchDeckUploaded: false,
-    coiUploaded: false,
-    dpiitUploaded: false,
-    prototypePhotosUploaded: false,
+    // 11. Documents Checklist
+    uploadedDocuments: {},
+    productDemoVideoUrl: '',
 
-    // 12. Discovery
-    heardFrom: 'KonguTBI Official Website / Social Media',
-    referredBy: '',
+    // 12. Discovery & Additional Details
+    discoverySources: [],
+    heardFromOther: '',
+    additionalDetails: '',
 
     // 13. Declaration
-    declarationConfirmed: false,
-    incubationTermsConfirmed: false,
-    signatoryName: '',
+    declarationAgreed: false,
+    signatoryFullName: '',
+    signatoryDesignation: '',
+    signatoryDate: '',
     signatoryPlace: '',
+    signatorySignatureFile: '',
+    companySealFile: '',
+    witnessFullName: '',
+    witnessDesignation: '',
+    witnessDate: '',
+    witnessPlace: '',
+    witnessSignatureFile: '',
   };
 
   const [formData, setFormData] = useState(() => {
@@ -624,11 +670,12 @@ export const ApplicationForm = ({ onBack }) => {
                     />
                   )}
 
-                  {/* Section 9: Project & Budget */}
+                  {/* Section 9: Project Details & Funding Proposal */}
                   {currentSection === 9 && (
                     <Section9ProjectBudget
                       formData={formData}
                       handleChange={handleChange}
+                      setFormData={setFormData}
                     />
                   )}
 
@@ -637,30 +684,34 @@ export const ApplicationForm = ({ onBack }) => {
                     <Section10IntellectualProperty
                       formData={formData}
                       handleChange={handleChange}
+                      setFormData={setFormData}
                     />
                   )}
 
-                  {/* Section 11: Documents */}
+                  {/* Section 11: Documents Checklist */}
                   {currentSection === 11 && (
                     <Section11Documents
                       formData={formData}
                       handleChange={handleChange}
+                      setFormData={setFormData}
                     />
                   )}
 
-                  {/* Section 12: Discovery */}
+                  {/* Section 12: Discovery & Additional Details */}
                   {currentSection === 12 && (
                     <Section12Discovery
                       formData={formData}
                       handleChange={handleChange}
+                      setFormData={setFormData}
                     />
                   )}
 
-                  {/* Section 13: Declaration */}
+                  {/* Section 13: Declaration & Signatures */}
                   {currentSection === 13 && (
                     <Section13Declaration
                       formData={formData}
                       handleChange={handleChange}
+                      setFormData={setFormData}
                     />
                   )}
 
