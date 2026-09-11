@@ -13,7 +13,7 @@ export const DeadlineCtaSection = ({ onApplyClick }) => {
 
         {/* Highlighted Gold Date */}
         <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#b8860b] tracking-wider pt-1">
-          31 AUGUST 2026
+          11 OCTOBER 2026
         </div>
 
         {/* Interactive Link that triggers the Application Form */}

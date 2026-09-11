@@ -14,10 +14,18 @@ export const Section13Declaration = ({ formData, handleChange, setFormData }) =>
 
   const handleSignFileUpload = (fieldKey, file) => {
     if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert(`File "${file.name}" is larger than 5 MB (${(file.size / (1024 * 1024)).toFixed(2)} MB). Please select a file under 5 MB.`);
+      return;
+    }
     if (setFormData) {
       setFormData((prev) => ({
         ...prev,
-        [fieldKey]: file.name
+        [fieldKey]: file.name,
+        uploadedDocumentFiles: {
+          ...(prev.uploadedDocumentFiles || {}),
+          [fieldKey]: file
+        }
       }));
     }
   };

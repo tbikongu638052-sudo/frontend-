@@ -71,7 +71,7 @@ export const ProgramPortal = ({ onNavigateToApply }) => {
 
               {/* Deadline immediately after */}
               <div className="text-xs sm:text-sm text-slate-600 font-medium mt-2">
-                Deadline: Aug 31, 2026
+                Deadline: October 11, 2026
               </div>
             </div>
 

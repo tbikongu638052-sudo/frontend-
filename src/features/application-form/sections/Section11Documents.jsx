@@ -25,13 +25,21 @@ export const Section11Documents = ({ formData, handleChange, setFormData }) => {
 
   const handleFileUpload = (docKey, file) => {
     if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert(`File "${file.name}" is larger than 5 MB (${(file.size / (1024 * 1024)).toFixed(2)} MB). Please select a file under 5 MB.`);
+      return;
+    }
     const uploadedDocs = { ...(formData.uploadedDocuments || {}) };
     uploadedDocs[docKey] = file.name;
 
     if (setFormData) {
       setFormData((prev) => ({
         ...prev,
-        uploadedDocuments: uploadedDocs
+        uploadedDocuments: uploadedDocs,
+        uploadedDocumentFiles: {
+          ...(prev.uploadedDocumentFiles || {}),
+          [docKey]: file
+        }
       }));
     }
   };
