@@ -39,18 +39,18 @@ export const ProgramPortal = ({ onNavigateToApply }) => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 antialiased pb-0 font-['Graphik',sans-serif]">
       {/* Top Navbar Header with Centered Logos and Bottom Shadow */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.08)] h-16 sm:h-22 flex items-center justify-center">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.08)] h-18 sm:h-24 md:h-26 flex items-center justify-center">
         <div className="w-full max-w-[96%] xl:max-w-[1480px] mx-auto px-3 sm:px-4 h-full flex items-center justify-center">
-          <div className="flex items-center justify-center gap-6 sm:gap-16 md:gap-20 h-full">
+          <div className="flex items-center justify-center gap-8 sm:gap-20 md:gap-24 h-full">
             <img 
               src={tbiLogo} 
               alt="Kongu TBI Logo" 
-              className="h-10 sm:h-16 md:h-18 w-auto object-contain scale-110 sm:scale-155 transform origin-center"
+              className="h-11 sm:h-16 md:h-19 w-auto object-contain scale-110 sm:scale-145 transform origin-center"
             />
             <img 
               src={kvbLogo} 
               alt="Karur Vysya Bank Logo" 
-              className="h-8 sm:h-13 md:h-15 w-auto object-contain scale-110 sm:scale-155 transform origin-center"
+              className="h-10 sm:h-16 md:h-20 w-auto object-contain scale-130 sm:scale-185 transform origin-center"
             />
           </div>
         </div>
