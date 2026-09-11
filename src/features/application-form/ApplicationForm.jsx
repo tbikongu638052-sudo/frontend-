@@ -349,7 +349,7 @@ export const ApplicationForm = ({ onBack }) => {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 antialiased font-['Graphik',sans-serif]">
       {/* Top Header with Back Navigation & Logos */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-[0_2px_15px_rgba(0,0,0,0.05)] h-20 sm:h-24 flex items-center">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-[0_2px_15px_rgba(0,0,0,0.05)] h-20 sm:h-24 md:h-26 flex items-center">
         <div className="w-full px-4 sm:px-8 flex items-center justify-between">
           <button
             onClick={onBack}
@@ -360,20 +360,20 @@ export const ApplicationForm = ({ onBack }) => {
             <span className="sm:hidden">Back</span>
           </button>
 
-          <div className="flex items-center justify-center gap-5 sm:gap-10 h-full py-2">
+          <div className="flex items-center justify-center gap-6 sm:gap-14 md:gap-18 h-full py-2">
             <img 
               src={tbiLogo} 
               alt="Kongu TBI Logo" 
-              className="h-12 sm:h-16 md:h-18 w-auto object-contain"
+              className="h-11 sm:h-16 md:h-20 w-auto object-contain scale-110 sm:scale-140 transform origin-center"
             />
             <img 
               src={kvbLogo} 
               alt="Karur Vysya Bank Logo" 
-              className="h-9 sm:h-13 md:h-14 w-auto object-contain"
+              className="h-8 sm:h-13 md:h-16 w-auto object-contain scale-110 sm:scale-140 transform origin-center"
             />
           </div>
 
-          <div className="w-20 sm:w-36 hidden sm:block"></div>
+          <div className="w-20 sm:w-48 hidden sm:block"></div>
         </div>
       </header>
 
