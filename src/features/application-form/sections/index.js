@@ -1,0 +1,13 @@
+export { Section1StartupIdentity } from './Section1StartupIdentity';
+export { Section2FounderTeam } from './Section2FounderTeam';
+export { Section3ProductOverview } from './Section3ProductOverview';
+export { Section4ReadinessLevels } from './Section4ReadinessLevels';
+export { Section5MarketTraction } from './Section5MarketTraction';
+export { Section6Financials } from './Section6Financials';
+export { Section7FundingHistory } from './Section7FundingHistory';
+export { Section8IncubationHistory } from './Section8IncubationHistory';
+export { Section9ProjectBudget } from './Section9ProjectBudget';
+export { Section10IntellectualProperty } from './Section10IntellectualProperty';
+export { Section11Documents } from './Section11Documents';
+export { Section12Discovery } from './Section12Discovery';
+export { Section13Declaration } from './Section13Declaration';

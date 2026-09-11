@@ -1,0 +1,15 @@
+export { DescriptionSection } from './DescriptionSection';
+export { ObjectiveSection } from './ObjectiveSection';
+export { BenefitsSection } from './BenefitsSection';
+export { FocusSectorsSection } from './FocusSectorsSection';
+export { ImpactFocusSection } from './ImpactFocusSection';
+export { EligibilitySection } from './EligibilitySection';
+export { FundingDisbursementSection } from './FundingDisbursementSection';
+export { FundUtilisationSection } from './FundUtilisationSection';
+export { IncubationTermsSection } from './IncubationTermsSection';
+export { WhatWeLookForSection } from './WhatWeLookForSection';
+export { SelectionProcessSection } from './SelectionProcessSection';
+export { OutcomesSection } from './OutcomesSection';
+export { FaqSection } from './FaqSection';
+export { DeadlineCtaSection } from './DeadlineCtaSection';
+export { ContactFooterSection } from './ContactFooterSection';
