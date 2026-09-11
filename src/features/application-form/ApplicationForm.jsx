@@ -527,14 +527,14 @@ export const ApplicationForm = ({ onBack }) => {
             </div>
             
             {/* Desktop Left Sidebar (13 Sections) - Hidden on Mobile */}
-            <aside className="hidden lg:block w-56 shrink-0 bg-white lg:bg-transparent rounded-2xl lg:rounded-none p-3 lg:p-0 border lg:border-none border-slate-200 sticky top-24 z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              <div className="pb-2.5 px-2">
-                <span className="text-[11px] font-bold text-slate-400 tracking-wider uppercase">
+            <aside className="hidden lg:block w-64 shrink-0 bg-white lg:bg-transparent rounded-2xl lg:rounded-none p-3 lg:p-0 border lg:border-none border-slate-200 sticky top-24 z-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <div className="pb-3 px-2">
+                <span className="text-xs font-bold text-slate-700 tracking-wider uppercase">
                   13 SECTIONS
                 </span>
               </div>
 
-              <nav className="space-y-0.5">
+              <nav className="space-y-1">
                 {sectionsList.map((sec) => {
                   const isActive = currentSection === sec.id;
                   const isCompleted = currentSection > sec.id;
@@ -544,21 +544,21 @@ export const ApplicationForm = ({ onBack }) => {
                       key={sec.id}
                       type="button"
                       onClick={() => setCurrentSection(sec.id)}
-                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all text-left cursor-pointer ${
                         isActive
                           ? 'bg-[#e0f2fe] text-[#0369a1] font-bold shadow-xs'
                           : isCompleted
-                          ? 'text-slate-700 hover:bg-slate-100'
-                          : 'text-slate-500 hover:bg-slate-100/70'
+                          ? 'text-slate-800 font-semibold hover:bg-slate-100'
+                          : 'text-slate-800 font-medium hover:bg-slate-100 hover:text-slate-950'
                       }`}
                     >
                       <span
-                        className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 transition-colors ${
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                           isActive
                             ? 'bg-[#0284c7] text-white shadow-xs'
                             : isCompleted
-                            ? 'bg-emerald-100 text-emerald-700 font-bold'
-                            : 'bg-slate-100 text-slate-500 border border-slate-200'
+                            ? 'bg-emerald-100 text-emerald-800 font-bold border border-emerald-300'
+                            : 'bg-slate-200/90 text-slate-800 font-bold border border-slate-300'
                         }`}
                       >
                         {sec.id}
@@ -574,7 +574,7 @@ export const ApplicationForm = ({ onBack }) => {
                 <button
                   type="button"
                   onClick={handleClearForm}
-                  className="flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-rose-600 cursor-pointer transition-colors"
+                  className="flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-rose-600 cursor-pointer transition-colors"
                 >
                   <Trash2 size={14} />
                   <span>Clear the form</span>
