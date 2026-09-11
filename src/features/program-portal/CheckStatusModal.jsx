@@ -1,32 +1,56 @@
 import React, { useState } from 'react';
-import { X, Search, Clock, CheckCircle2 } from 'lucide-react';
+import { X, Search, Clock, CheckCircle2, Loader2 } from 'lucide-react';
 import { useNotification } from '../../hooks/useNotification';
+import { fetchApplicationStatus } from '../../lib/supabaseClient';
 
 export const CheckStatusModal = ({ isOpen, onClose }) => {
   const { notify } = useNotification();
   const [query, setQuery] = useState('');
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) {
       notify('Please enter an Application ID or registered email', 'error');
       return;
     }
 
-    setResult({
-      appId: query.toUpperCase().startsWith('P2K') ? query.toUpperCase() : 'P2K-2026-849201',
-      program: 'PITCH 2KONNECT (KVB CSR Grant)',
-      status: 'Initial Screening & Technical Committee Review',
-      submissionDate: '11 Sep 2026',
-      evaluationHub: 'KonguTBI, Erode',
-      statusColor: 'text-amber-600',
-      bgColor: 'bg-amber-50',
-      borderColor: 'border-amber-200',
-    });
-    notify('Application record located successfully!', 'success');
+    setLoading(true);
+    setResult(null);
+
+    try {
+      const data = await fetchApplicationStatus(query);
+      if (data) {
+        const dateStr = data.created_at ? new Date(data.created_at).toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        }) : '11 Sep 2026';
+
+        setResult({
+          appId: data.application_id,
+          legalName: data.legal_name,
+          program: 'PITCH 2KONNECT — KonguTBI × KVB CSR Grant',
+          status: data.status || 'Under Review',
+          submissionDate: dateStr,
+          evaluationHub: 'KonguTBI @ Kongu Engineering College, Erode',
+          statusColor: data.status === 'Approved' ? 'text-emerald-700' : 'text-amber-700',
+          bgColor: data.status === 'Approved' ? 'bg-emerald-50' : 'bg-amber-50',
+          borderColor: data.status === 'Approved' ? 'border-emerald-200' : 'border-amber-200',
+        });
+        notify('Application record located successfully!', 'success');
+      } else {
+        notify('No application found with the provided ID or email. Please check and try again.', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      notify('Failed to query status. Please try again.', 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,9 +100,17 @@ export const CheckStatusModal = ({ isOpen, onClose }) => {
 
           <button
             type="submit"
-            className="w-full bg-[#9d4851] hover:bg-[#83272e] text-white py-2.5 rounded-lg text-sm font-bold shadow-md transition-all cursor-pointer"
+            disabled={loading}
+            className="w-full bg-[#1b365d] hover:bg-[#0c2340] disabled:bg-slate-400 text-white py-2.5 rounded-lg text-sm font-bold shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
           >
-            Track Status
+            {loading ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                <span>Checking Database...</span>
+              </>
+            ) : (
+              <span>Track Status</span>
+            )}
           </button>
         </form>
 

@@ -18,7 +18,8 @@ import {
   ShieldCheck,
   FolderUp,
   Compass,
-  CheckSquare
+  CheckSquare,
+  Loader2
 } from 'lucide-react';
 import tbiLogo from '../../assets/tbi logo.png';
 import kvbLogo from '../../assets/kvb logo.png';
@@ -40,6 +41,7 @@ import {
   Section12Discovery,
   Section13Declaration
 } from './sections';
+import { uploadFileToSupabase, submitApplicationToSupabase } from '../../lib/supabaseClient';
 
 export const ApplicationForm = ({ onBack }) => {
   const { notify } = useNotification();
@@ -48,6 +50,8 @@ export const ApplicationForm = ({ onBack }) => {
   const [appId, setAppId] = useState('');
   const [draftRestored, setDraftRestored] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitProgressText, setSubmitProgressText] = useState('');
 
   // 13 Sections List
   const sectionsList = [
@@ -327,17 +331,57 @@ export const ApplicationForm = ({ onBack }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.declarationConfirmed || !formData.incubationTermsConfirmed) {
-      notify('Please accept the declaration conditions before submitting.', 'error');
+    if (!formData.declarationAgreed) {
+      notify('Please confirm the declaration agreement checkbox before submitting.', 'error');
       return;
     }
-    const generatedId = 'P2K-2026-' + Math.floor(100000 + Math.random() * 900000);
-    setAppId(generatedId);
-    setSubmitted(true);
-    localStorage.removeItem('pitch2konnect_form_draft');
-    notify(`Application submitted successfully! Application ID: ${generatedId}`, 'success');
+
+    setIsSubmitting(true);
+    setSubmitProgressText('Initializing submission...');
+
+    try {
+      const generatedId = 'P2K-2026-' + Math.floor(100000 + Math.random() * 900000);
+      const uploadedFilesMap = {};
+
+      // 1. Upload attached files to Supabase Storage 'tbi_pdfs' bucket
+      const filesToUpload = formData.uploadedDocumentFiles || {};
+      const fileKeys = Object.keys(filesToUpload);
+
+      if (fileKeys.length > 0) {
+        for (let i = 0; i < fileKeys.length; i++) {
+          const key = fileKeys[i];
+          const fileObj = filesToUpload[key];
+          if (fileObj) {
+            setSubmitProgressText(`Uploading document (${i + 1}/${fileKeys.length}): ${fileObj.name}...`);
+            try {
+              const uploadResult = await uploadFileToSupabase(fileObj, generatedId, key);
+              if (uploadResult) {
+                uploadedFilesMap[key] = uploadResult;
+              }
+            } catch (upErr) {
+              console.warn(`File upload warning for ${key}:`, upErr);
+            }
+          }
+        }
+      }
+
+      // 2. Insert master record into applications table in Supabase
+      setSubmitProgressText('Saving application to secure database...');
+      await submitApplicationToSupabase(formData, generatedId, uploadedFilesMap);
+
+      setAppId(generatedId);
+      setSubmitted(true);
+      localStorage.removeItem('pitch2konnect_form_draft');
+      notify(`Application submitted successfully! Application ID: ${generatedId}`, 'success');
+    } catch (error) {
+      console.error('Submission failed:', error);
+      notify(`Submission failed: ${error.message || 'Please check network and try again.'}`, 'error');
+    } finally {
+      setIsSubmitting(false);
+      setSubmitProgressText('');
+    }
   };
 
   const statesOfIndia = [
@@ -755,6 +799,29 @@ export const ApplicationForm = ({ onBack }) => {
           </div>
         )}
       </div>
+
+      {/* Submitting Progress Modal Overlay */}
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-slate-200 text-center space-y-4">
+            <div className="w-16 h-16 rounded-full bg-blue-50 text-[#1b365d] flex items-center justify-center mx-auto shadow-inner">
+              <Loader2 size={36} className="animate-spin text-[#1b365d]" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">
+              Submitting Your Application
+            </h3>
+            <p className="text-xs text-slate-600 font-medium leading-relaxed">
+              {submitProgressText || 'Please wait while we upload your attached documents and register your application in Supabase...'}
+            </p>
+            <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="bg-[#1b365d] h-2 rounded-full animate-pulse w-3/4 mx-auto"></div>
+            </div>
+            <p className="text-[11px] text-slate-400">
+              Please do not close or refresh this browser tab.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="w-full bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-12">
